@@ -37,8 +37,9 @@ public class CountryCodeConverter {
                     .getClassLoader().getResource(filename).toURI()));
 
             // TODO Task: use lines to populate the instance variable(s)
-            for (String line : lines) {
-                String[] parts = line.split(" ");
+
+            for (int i = 1; i < lines.size(); i++) {
+                String[] parts = lines.get(i).split("\\t");
                 dictionary.put(parts[0], parts[2]);
             }
         }
@@ -56,7 +57,7 @@ public class CountryCodeConverter {
     public String fromCountryCode(String code) {
         // TODO Task: update this code to use an instance variable to return the correct value
         for (Map.Entry<String, String> entry : dictionary.entrySet()) {
-            if (code.equals(entry.getValue())) {
+            if (code.toUpperCase().equals(entry.getValue())) {
                 return entry.getKey();
             }
         }
