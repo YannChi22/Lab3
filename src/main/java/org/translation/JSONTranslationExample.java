@@ -24,17 +24,17 @@ public class JSONTranslationExample {
             // which we then create a new JSONArray object from.
             // TODO CheckStyle: Line is longer than 120 characters
             //                  (note: you can split a line such that the next line starts with a .method()... call
-            String jsonString = Files.readString(Paths.get(getClass().getClassLoader().getResource("sample.json")
-                    .toURI()));
+            String jsonString = Files.readString(Paths.get(getClass().getClassLoader()
+                    .getResource("sample.json").toURI()));
             this.jsonArray = new JSONArray(jsonString);
-        } catch (IOException | URISyntaxException ex) {
+        }
+        catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
     }
 
     /**
      * Returns the Spanish translation of Canada.
-     *
      * @return the Spanish translation of Canada
      */
     public String getCanadaCountryNameSpanishTranslation() {
@@ -49,20 +49,29 @@ public class JSONTranslationExample {
 
     /**
      * Returns the name of the country based on the provided country and language codes.
-     *
-     * @param countryCode  the country, as its three-letter code.
+     * @param countryCode the country, as its three-letter code.
      * @param languageCode the language to translate to, as its two-letter code.
      * @return the translation of country to the given language or "Country not found" if there is no translation.
      */
     public String getCountryNameTranslation(String countryCode, String languageCode) {
-        JSONObject canada = jsonArray.getJSONObject(CANADA_INDEX);
+        JSONTranslator translator = new JSONTranslator();
+
         try {
-            return canada.getString(languageCode);
-        } catch (JSONException ex) {
+            String country = translator.translate(countryCode, languageCode);
+            if (country == null) {
+                throw new JSONException(countryCode);
+            }
+            return translator.translate(countryCode, languageCode);
+        }
+        catch (JSONException ex) {
             return "Country not found";
         }
     }
 
+    /**
+     * Prints the Spanish translation of Canada.
+     * @param args not used
+     */
     public static void main(String[] args) {
         JSONTranslationExample jsonTranslationExample = new JSONTranslationExample();
 
