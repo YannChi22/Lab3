@@ -1,5 +1,6 @@
 package org.translation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,8 +25,8 @@ public class Main {
         // TODO Task: once you finish the JSONTranslator,
         //            you can use it here instead of the InLabByHandTranslator
         //            to try out the whole program!
-        // Translator translator = new JSONTranslator(null);
-        Translator translator = new InLabByHandTranslator();
+        Translator translator = new JSONTranslator();
+        // Translator translator = new InLabByHandTranslator();
 
         runProgram(translator);
     }
@@ -75,7 +76,15 @@ public class Main {
         //            and print them out; one per line
         //      hint: class Collections provides a static sort method
         // TODO Task: convert the country codes to the actual country names before sorting
-        System.out.println(countries);
+        List<String> countryNames = new ArrayList<String>();
+
+        for (String country : countries) {
+            countryNames.add(translator.translate(country, "en"));
+        }
+
+        countryNames.sort(null);
+
+        System.out.println(countryNames);
 
         System.out.println("select a country from above:");
 
@@ -86,11 +95,13 @@ public class Main {
 
     // Note: CheckStyle is configured so that we don't need javadoc for private methods
     private static String promptForLanguage(Translator translator, String country) {
-
+        List<String> sortedLang = translator.getCountryLanguages(country);
         // TODO Task: replace the line below so that we sort the languages alphabetically and print them out;
         //  one per line
         // TODO Task: convert the language codes to the actual language names before sorting
-        System.out.println(translator.getCountryLanguages(country));
+        sortedLang.sort(null);
+
+        System.out.println(sortedLang);
 
         System.out.println("select a language from above:");
 

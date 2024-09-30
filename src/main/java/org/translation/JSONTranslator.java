@@ -17,7 +17,9 @@ import org.json.JSONObject;
 public class JSONTranslator implements Translator {
 
     // TODO Task: pick appropriate instance variables for this class
+    public static final String CODE = "alpha3";
     private final JSONArray countries = new JSONArray();
+
     /**
      * Constructs a JSONTranslator using data from the sample.json resources file.
      */
@@ -59,7 +61,7 @@ public class JSONTranslator implements Translator {
 
         for (int i = 0; i < countries.length(); i++) {
             JSONObject obj = countries.getJSONObject(i);
-            if (obj.getString("alpha3").equals(country)) {
+            if (obj.getString(CODE).equals(country)) {
                 for (String key: obj.keySet()) {
                     if (!"alpha3".equals(key) && !"alpha2".equals(key) && !"id".equals(key)) {
                         languages.add(obj.getString(key));
@@ -78,7 +80,7 @@ public class JSONTranslator implements Translator {
 
         for (int i = 0; i < countries.length(); i++) {
             JSONObject obj = countries.getJSONObject(i);
-            country.add(obj.getString("alpha3"));
+            country.add(obj.getString(CODE));
         }
         return country;
     }
@@ -88,7 +90,7 @@ public class JSONTranslator implements Translator {
         // TODO Task: complete this method using your instance variables as needed
         for (int i = 0; i < countries.length(); i++) {
             JSONObject obj = countries.getJSONObject(i);
-            if (obj.getString("alpha3").equals(country)) {
+            if (obj.getString(CODE).equals(country)) {
                 return obj.getString(language);
             }
         }
